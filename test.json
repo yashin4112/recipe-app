@@ -1,0 +1,39 @@
+[Log] Object
+
+asset: Object
+
+ACL: {}
+
+_version: 1
+
+content_type: "image/jpeg"
+
+created_at: "2025-01-31T10:53:46.787Z"
+
+created_by: "blt6d76184dc05734d4"
+
+file_size: "251123"
+
+filename: "Wild-West-Warrior_Large.jpeg"
+
+is_dir: false
+
+parent_uid: null
+
+tags: [] (0)
+
+title: "Wild-West-Warrior_Large.jpeg"
+
+uid: "bltbf781d5d4a9aedb1"
+
+updated_at: "2025-01-31T10:53:46.787Z"
+
+updated_by: "blt6d76184dc05734d4"
+
+url: "https://images.contentstack.io/v3/assets/blt2b369cffe0f5f4dc/bltbf781d5d4a9aedb1/679cabba611e3002e57465fd/Wild-West-Warrior_Large.jpeg"
+
+Object Prototype
+
+notice: "Asset created successfully."
+
+Object Prototype

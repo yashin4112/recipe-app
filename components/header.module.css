@@ -1,0 +1,124 @@
+/* components/header.module.css */
+.header {
+    background-color: #ffffff; /* White background */
+    box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.1), -8px -8px 16px rgba(255, 255, 255, 0.7); /* Neumorphism soft shadows */
+    border-radius: 15px; /* Rounded corners */
+    padding: 1rem;
+    transition: all 0.3s ease;
+  }
+  
+  .header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Distribute space between logo, title, and button */
+    max-width: 1200px;
+    margin: 0 20px;
+    width: 100%;
+  }
+  
+  .logo {
+    height: 50px;
+  }
+  
+  .title {
+    margin: 0;
+    font-size: 2rem;
+    color: #333;
+    font-weight: 600;
+  }
+  
+  .nav {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    gap: 40px; /* Space between each navigation label */
+  }
+  
+  .nav-item {
+    /* Space handling for items */
+  }
+  
+  .nav-link {
+    color: #333; /* Darker text for contrast */
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  .nav-link:hover {
+    color: #0077cc; /* Change color on hover */
+    text-decoration: underline;
+  }
+  
+  /* Hide navigation on mobile */
+  .nav {
+    display: none; /* By default, navigation is hidden */
+  }
+  
+  .nav.show {
+    display: block; /* When "show" class is added, display the menu */
+  }
+  
+  /* Dropdown button style (hamburger menu) */
+  .menu-button {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    display: none; /* Hide the button on larger screens */
+  }
+  
+  /* Optional: Hover effect on the header */
+  .header:hover {
+    box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.15), -12px -12px 20px rgba(255, 255, 255, 0.85); /* Deeper shadow on hover */
+  }
+  
+  /* Mobile Layout */
+  @media (max-width: 768px) {
+    .header-container {
+      flex-direction: column; /* Stack elements vertically */
+      gap: 20px; /* Reduce the gap */
+      text-align: center; /* Center-align elements */
+    }
+  
+    .logo {
+      height: 40px; /* Adjust logo size for smaller screens */
+    }
+  
+    .title {
+      font-size: 1.5rem; /* Reduce title size */
+    }
+  
+    .nav {
+      display: none; /* Hide the nav by default on mobile */
+      gap: 10px;
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column; /* Stack menu items vertically */
+    }
+  
+    .menu-button {
+      display: block; /* Show the button on mobile */
+    }
+  
+    .nav-link {
+      font-size: 1.2rem; /* Slightly larger font size on mobile */
+    }
+  }
+  
+  /* For smaller screens (optional) */
+  @media (max-width: 480px) {
+    .logo {
+      height: 35px; /* Further reduce logo size */
+    }
+  
+    .title {
+      font-size: 1.2rem; /* Further reduce title size */
+    }
+  
+    .nav-link {
+      font-size: 1rem; /* Reduce navigation link font size */
+    }
+  }
+  
