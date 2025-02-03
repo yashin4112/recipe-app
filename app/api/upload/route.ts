@@ -1,29 +1,37 @@
 
 // import { NextRequest, NextResponse } from "next/server";
 // import fs from "fs";
+// import path from "path";
 // import FormData from "form-data";
 // import axios from "axios";
+// import { ChartNoAxesColumnIcon } from "lucide-react";
 
 // export async function POST(req: NextRequest) {
+
 //     try {
 //         const formData = await req.formData(); // Get form data
 //         const file = formData.get("file") as Blob; // Extract file
-//         const base = formData.get("base")
 
 //         if (!file) {
 //             return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
 //         }
 
 //         const buffer = Buffer.from(await file.arrayBuffer());
-//         //@ts-ignore
-//         const tempPath = `/tmp/${file.name}`; // Save to temp folder
+//         const uploadDir = path.join(process.cwd(), "uploads"); // Store in project directory
 
-//         fs.writeFileSync(tempPath, buffer); // Store file temporarily
+//         // Ensure the 'uploads' directory exists
+//         if (!fs.existsSync(uploadDir)) {
+//             fs.mkdirSync(uploadDir, { recursive: true });
+//         }
+
+//         //@ts-ignore
+//         const filePath = path.join(uploadDir, file.name); // Set file path in the directory
+
+//         fs.writeFileSync(filePath, buffer); // Save file
 
 //         // Upload to Contentstack
 //         const contentstackFormData = new FormData();
-//         contentstackFormData.append("asset[upload]", fs.createReadStream(tempPath));
-//         // contentstackFormData.append("asset[upload]", file);
+//         contentstackFormData.append("asset[upload]", fs.createReadStream(filePath));
 
 //         const response = await axios.post(
 //             "https://api.contentstack.io/v3/assets",
@@ -37,51 +45,36 @@
 //             }
 //         );
 
-//         console.log("uid ",response.data)
-
 //         return NextResponse.json(response.data);
 //     } catch (error) {
 //         console.error("Upload error:", error);
 //         return NextResponse.json({ error: "Upload failed" }, { status: 500 });
 //     }
-
-    
 // }
 
 
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
 import FormData from "form-data";
 import axios from "axios";
-import { ChartNoAxesColumnIcon } from "lucide-react";
 
 export async function POST(req: NextRequest) {
-
     try {
-        const formData = await req.formData(); // Get form data
+        const formData = await req.formData();
         const file = formData.get("file") as Blob; // Extract file
+        const localUrl = URL.createObjectURL(file); 
+        console.log("gshgshs",localUrl)
 
         if (!file) {
             return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
         }
 
-        const buffer = Buffer.from(await file.arrayBuffer());
-        const uploadDir = path.join(process.cwd(), "uploads"); // Store in project directory
+        const buffer = Buffer.from(await file.arrayBuffer()); // Convert file to Buffer
 
-        // Ensure the 'uploads' directory exists
-        if (!fs.existsSync(uploadDir)) {
-            fs.mkdirSync(uploadDir, { recursive: true });
-        }
+        // Prepare FormData for Contentstack
+        const contentstackFormData = new FormData();
 
         //@ts-ignore
-        const filePath = path.join(uploadDir, file.name); // Set file path in the directory
-
-        fs.writeFileSync(filePath, buffer); // Save file
-
-        // Upload to Contentstack
-        const contentstackFormData = new FormData();
-        contentstackFormData.append("asset[upload]", fs.createReadStream(filePath));
+        contentstackFormData.append("asset[upload]", buffer, file.name); // Directly attach buffer
 
         const response = await axios.post(
             "https://api.contentstack.io/v3/assets",
@@ -90,7 +83,7 @@ export async function POST(req: NextRequest) {
                 headers: {
                     api_key: process.env.CONTENTSTACK_API_KEY!,
                     authorization: process.env.CONTENTSTACK_MANAGEMENT_TOKEN!,
-                    ...contentstackFormData.getHeaders(),
+                    ...contentstackFormData.getHeaders(), // Attach correct headers
                 },
             }
         );
