@@ -87,6 +87,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
       onClick={handleNavigation}
     >
       <img
+      //@ts-ignore 
         src={recipe_image[0]?.url}
         alt={title}
         className="w-full h-48 object-cover"

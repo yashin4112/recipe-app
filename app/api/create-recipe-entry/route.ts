@@ -41,7 +41,6 @@ export async function POST(req: NextRequest) {
         });
     } catch (error) {
         console.error("Error creating recipe entry:", error);
-        console.log("this is error usjhs",error)
         return NextResponse.json({ error: "Entry creation failed", "msg":error}, { status: 500 });
     }
 }

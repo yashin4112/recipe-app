@@ -157,7 +157,6 @@ export async function createEntryWithAsset(entryData: UploadRecipeProps) {
       .entry()
       .create({ entry: entryData });
 
-    console.log('Entry created successfully:', response);
     // return response;
   } catch (error) {
     console.error('Error creating entry with asset:', error);

@@ -42,8 +42,6 @@ function CreateRecipe() {
       body: formData, // Send file in FormData
     });
     const assetResult = await assetResponse.json();
-    console.log("Upload response:", assetResult);
-    console.log(assetResult.asset.uid)
     
     recipe.recipe_image = assetResult.asset.uid;
 
@@ -53,16 +51,16 @@ function CreateRecipe() {
       },
     };
 
-    // const recipeResponse = await fetch("/api/create-recipe-entry", {
-    //   method: "POST",
-    //   body: JSON.stringify(recipeEntryData), // Send file in FormData
-    // });
-    // const re = await recipeResponse.json();
-    // console.log("re ",re)
+    const recipeResponse = await fetch("/api/create-recipe-entry", {
+      method: "POST",
+      body: JSON.stringify(recipeEntryData), // Send file in FormData
+    });
+    const re = await recipeResponse.json();
+
     } catch (error) {
       console.error(error)
     }
-    // router.push('/');
+    router.push('/');
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
