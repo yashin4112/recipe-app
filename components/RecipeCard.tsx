@@ -79,7 +79,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
     router.push(`/recipe-details?${query}`); // Pass the serialized recipe as a query parameter
   };
 
-  const { title, category, description, preparation_time, serving_size, recipe_image } = recipe;
+  const { title, category, description, cook_time, serving_size, recipe_image } = recipe;
 
   return (
     <div
@@ -88,7 +88,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
     >
       <img
       //@ts-ignore 
-        src={recipe_image[0]?.url}
+        src={recipe_image.url ?? "https://imgs.search.brave.com/DzOyhFO0fjZ-OnEOqCVIWnV6qHWY_T43bB-bfgHRUFk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA0Lzk5LzkzLzMx/LzM2MF9GXzQ5OTkz/MzExN19aQVVCZnYz/UDFIRU9zWkRybmti/TkN0NGpjM0FvZEFy/bC5qcGc"}
         alt={title}
         className="w-full h-48 object-cover"
       />
@@ -103,7 +103,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
         <div className="flex items-center justify-between text-gray-500">
           <div className="flex items-center">
             <Clock className="w-4 h-4 mr-1" />
-            <span className="text-sm">{preparation_time} min </span>
+            <span className="text-sm">{cook_time} min </span>
           </div>
           <div className="flex items-center">
             <Users className="w-4 h-4 mr-1" />
