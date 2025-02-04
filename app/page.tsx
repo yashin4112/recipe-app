@@ -1,4 +1,3 @@
-import { uploadAssetToContentstack } from '@/contentstack-sdk';
 import Home from '../components/home'; // Import the Home component
 import { getAllEntries } from '@/helper'; // Import the getAllEntries function
 

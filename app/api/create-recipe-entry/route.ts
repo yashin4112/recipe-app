@@ -33,38 +33,95 @@ export async function POST(req: NextRequest) {
             }
         );
         const data = await createEntryResponse.data;
-        console.log("entry uid ", data.entry.uid)
 
-        // const env = process.env.CONTENTSTACK_ENVIRONMENT!;
+        const publishRecipeData = {
+                "entries": [{
+                    "uid": data.entry.uid,
+                    "content_type": "recipe",
+                    "version": 1,
+                    "locale": "en-us"
+                }],
+                "locales": [
+                    "en-us"
+                ],
+                "environments": [
+                    "development"
+                ],
+                "publish_with_reference": true,
+                "skip_workflow_stage_check": true
+        };
 
-        // console.log("env ",env)
-        const currentTime = new Date().toISOString();
-        console.log(currentTime)
+        const publishEntry = await axios.post(
+            `https://api.contentstack.io/v3/bulk/publish?x-bulk-action=publish`,
+            publishRecipeData,
+            {
+                headers: {
+                    "api_key": process.env.CONTENTSTACK_API_KEY,
+                    "authorization": process.env.CONTENTSTACK_MANAGEMENT_TOKEN,
+                },
+            }
+        );
+
+        const getResponse = await axios.get(`https://api.contentstack.io/v3/content_types/home_page/entries/bltb9b7daa44e1dcc7d`, {
+            headers: {
+                api_key: process.env.CONTENTSTACK_API_KEY,
+                authorization: process.env.CONTENTSTACK_MANAGEMENT_TOKEN,
+                "Content-Type": "application/json",
+            },
+        });
+
+        const existingEntry = getResponse.data.entry;
+        const newBlock = {
+            recipe: {
+                reference: [
+                    {
+                        uid: data.entry.uid, 
+                        _content_type_uid: "recipe",
+                    },
+                ],
+            },
+        };
+
+        if (!existingEntry.recipes) {
+            existingEntry.recipes = [];
+        }
+
+        existingEntry.recipes.push(newBlock);
+        const upEntry = {"recipes":existingEntry.recipes};
+
+        const updateUrl = `https://api.contentstack.io/v3/content_types/home_page/entries/bltb9b7daa44e1dcc7d`;
+        const updateResponse = await axios.put(updateUrl, { entry: upEntry }, {
+            headers: {
+                api_key: process.env.CONTENTSTACK_API_KEY,
+                authorization: process.env.CONTENTSTACK_MANAGEMENT_TOKEN,
+                "Content-Type": "application/json",
+            },
+        });
+
         const publishData = {
             entry: {
                 environments: [process.env.CONTENTSTACK_ENVIRONMENT], // Specify the target environment
                 locales: ["en-us"], // Adjust locale as needed
             },
             "locale": "en-us",
-	        // "version": 1,
-	        // "scheduled_at": currentTime
+            "publish_with_reference": true
         };
 
-        const publishEntry = await axios.post(
-            `https://api.contentstack.io/v3/content_types/recipe/entries/${data.entry.uid}/publish`,
+        const publishHomePage = await axios.post(
+            `https://api.contentstack.io/v3/content_types/home_page/entries/bltb9b7daa44e1dcc7d/publish`,
             publishData,
             {
                 headers: {
-                    "api_key": process.env.CONTENTSTACK_API_KEY!,
-                    "authorization": process.env.CONTENTSTACK_MANAGEMENT_TOKEN!,
+                    "api_key": process.env.CONTENTSTACK_API_KEY,
+                    "authorization": process.env.CONTENTSTACK_MANAGEMENT_TOKEN,
                 },
             }
         );
+
         // Respond with the created recipe entry
         return NextResponse.json({
             success: true,
             recipe: createEntryResponse.data,
-            publish:publishEntry.data
         });
     } catch (error) {
         console.error("Error creating recipe entry:", error);

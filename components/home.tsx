@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from "react";
 import {useRouter} from "next/navigation";
-import { Search, ChefHat, PlusCircle } from "lucide-react";
+import { Search, ChefHat, PlusCircle, ChevronsLeftIcon } from "lucide-react";
 import RecipeCard from "../components/RecipeCard";
 import "../app/globals.css";
 import { HomePageProps } from "@/typescript/layout";
@@ -24,7 +24,11 @@ export default function Home({ homePageData }: HomeProps) {
     const filtered = homePageData.recipes.filter((recipe) => {
       //@ts-ignore
       const recipeData = recipe.recipe.reference[0];
-      const titleMatch = recipeData.title
+
+      // console.log("Redd ",recipeData.title )
+
+      if (recipeData.title != undefined) {
+        const titleMatch = recipeData.title
         .toLowerCase()
         .includes(lowercasedSearchTerm);
       const descriptionMatch = recipeData.description
@@ -36,8 +40,8 @@ export default function Home({ homePageData }: HomeProps) {
         .some((ingredient: string) =>
           ingredient.toLowerCase().includes(lowercasedSearchTerm)
         );
-
-      return titleMatch || descriptionMatch || ingredientsMatch;
+        return titleMatch || descriptionMatch || ingredientsMatch;
+      }
     });
 
     setFilteredRecipes(filtered);
