@@ -71,7 +71,7 @@ const RecipeDetailsContent = () => {
           <div className="relative h-[400px]">
             <img
             //@ts-ignore
-              src={recipe_image[0]?.url}
+              src={recipe_image.url}
               alt={title}
               className="w-full h-full object-cover"
             />
