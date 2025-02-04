@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
                 "ingredients": recipeData.ingredients,
                 "instructions": recipeData.instructions,
                 "category": recipeData.category,
-                "serving_size": recipeData.serving_size + "people",
+                "serving_size": recipeData.serving_size,
                 "difficulty": recipeData.difficulty,
                 "cook_time": recipeData.preparation_time,
                 "recipe_image": recipeData.recipe_image, // The uploaded asset UID will be used here
@@ -29,15 +29,42 @@ export async function POST(req: NextRequest) {
                 headers: {
                     "api_key": process.env.CONTENTSTACK_API_KEY!,
                     "authorization": process.env.CONTENTSTACK_MANAGEMENT_TOKEN!,
-                    // "Content-Type": "application/json",
                 },
             }
         );
+        const data = await createEntryResponse.data;
+        console.log("entry uid ", data.entry.uid)
 
+        // const env = process.env.CONTENTSTACK_ENVIRONMENT!;
+
+        // console.log("env ",env)
+        const currentTime = new Date().toISOString();
+        console.log(currentTime)
+        const publishData = {
+            entry: {
+                environments: [process.env.CONTENTSTACK_ENVIRONMENT], // Specify the target environment
+                locales: ["en-us"], // Adjust locale as needed
+            },
+            "locale": "en-us",
+	        // "version": 1,
+	        // "scheduled_at": currentTime
+        };
+
+        const publishEntry = await axios.post(
+            `https://api.contentstack.io/v3/content_types/recipe/entries/${data.entry.uid}/publish`,
+            publishData,
+            {
+                headers: {
+                    "api_key": process.env.CONTENTSTACK_API_KEY!,
+                    "authorization": process.env.CONTENTSTACK_MANAGEMENT_TOKEN!,
+                },
+            }
+        );
         // Respond with the created recipe entry
         return NextResponse.json({
             success: true,
             recipe: createEntryResponse.data,
+            publish:publishEntry.data
         });
     } catch (error) {
         console.error("Error creating recipe entry:", error);

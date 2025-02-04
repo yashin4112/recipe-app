@@ -75,6 +75,10 @@ export const getEntry = ({
   return new Promise((resolve, reject) => {
     const query = Stack.ContentType(contentTypeUid).Query();
     if (referenceFieldPath) query.includeReference(referenceFieldPath);
+    query.addParam("cache", "false"); 
+    query.addParam("_", new Date().getTime().toString()); 
+    query.addParam("noCache", "true"); 
+    query.addParam("random", Math.random().toString(36).substring(7));
     query
       .toJSON()
       .find()

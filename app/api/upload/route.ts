@@ -61,14 +61,13 @@ export async function POST(req: NextRequest) {
     try {
         const formData = await req.formData();
         const file = formData.get("file") as Blob; // Extract file
-        const localUrl = URL.createObjectURL(file); 
-        console.log("gshgshs",localUrl)
 
         if (!file) {
             return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
         }
 
         const buffer = Buffer.from(await file.arrayBuffer()); // Convert file to Buffer
+
 
         // Prepare FormData for Contentstack
         const contentstackFormData = new FormData();
