@@ -36,7 +36,7 @@ export const getAllEntries = async (): Promise<HomePageProps> => {
   const response = (await getEntry({
     contentTypeUid: "home_page",
     referenceFieldPath: ["recipes.recipe.reference"],
-    jsonRtePath: undefined //["notification_bar.announcement_text"],
+    jsonRtePath: undefined,
   })) as HomePageProps[][];
 
   liveEdit && addEditableTags(response[0][0], "home_page", true);
