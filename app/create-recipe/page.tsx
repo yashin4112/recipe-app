@@ -57,10 +57,13 @@ function CreateRecipe() {
     });
     const re = await recipeResponse.json();
 
+    if (re.success) {
+      window.location.href = "/"; 
+    }
+
     } catch (error) {
       console.error(error)
     }
-    router.push('/');
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
