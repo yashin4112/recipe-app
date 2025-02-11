@@ -20,5 +20,5 @@ export async function middleware(req: NextRequest) {
 
 // Define the paths that should trigger the middleware
 export const config = {
-  matcher: ['/create-recipe', '/recipe-details', '/', '/api/protected/*'],
+  matcher: ['/create-recipe', '/recipe-details', '/'],
 };

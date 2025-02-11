@@ -29,8 +29,8 @@ const Login = () => {
         toast.error(res.error);
       } else {
         toast.success("Welcome back!");
-        console.log("res data", res)
-        router.push("/"); // Redirect to home page after successful login
+        console.log("res data", res);
+        window.location.href = "/"; 
       }
     } catch (error) {
       toast.error("An error occurred during login");
