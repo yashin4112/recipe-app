@@ -14,7 +14,8 @@ const LogoutPage = () => {
       await signOut({ redirect: false });
 
       // Once logged out, redirect the user to the login page manually.
-      window.location.href = "/login"; 
+      // window.location.href = "/login"; 
+      router.push("/login")
     };
 
     logoutUser();  // Call the logout function on page load
