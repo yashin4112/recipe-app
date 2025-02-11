@@ -30,7 +30,8 @@ const Login = () => {
       } else {
         toast.success("Welcome back!");
         console.log("res data", res);
-        window.location.href = "/"; 
+        // window.location.href = "/";
+        router.push("/") 
       }
     } catch (error) {
       toast.error("An error occurred during login");

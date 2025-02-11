@@ -69,9 +69,11 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
+// import { PrismaClient } from "@lib/prisma";
+import prisma from "@/lib/prisma";
 import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
 const authOptions: NextAuthOptions = {
   session: {
@@ -110,9 +112,9 @@ const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: "/login",
-    signOut: "/logout",
+    signIn: "/login", 
   },
   callbacks: {
     async jwt({ token, user }) {
@@ -126,17 +128,6 @@ const authOptions: NextAuthOptions = {
         session.user.id = token.id;
       }
       return session;
-    },
-  },
-  cookies: {
-    sessionToken: {
-      name: "next-auth.session-token",
-      options: {
-        httpOnly: true,
-        sameSite: "lax",
-        path: "/",
-        secure: process.env.NODE_ENV === "production",
-      },
     },
   },
 };
