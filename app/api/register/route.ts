@@ -1,9 +1,10 @@
 // app/api/auth/register/route.ts
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
-import { PrismaClient } from "@prisma/client";
+// import { PrismaClient } from "@prisma/client";
+import prisma from "@/lib/prisma";
 
-const prisma = globalThis.prisma || new PrismaClient();
+// const prisma = globalThis.prisma || new PrismaClient();
 if (process.env.NODE_ENV !== "production") globalThis.prisma = prisma;
 
 export async function POST(req: Request) {

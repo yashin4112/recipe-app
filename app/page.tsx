@@ -93,7 +93,7 @@ export default function Page() {
 
   // Effect to check session status and fetch home page data if authenticated
   useEffect(() => {
-    if (status === "loading") return;  // Wait until the session is loaded
+    if (status === "loading") router.push("/login");  // Wait until the session is loaded
 
     if (!session) {
       // Redirect to login page if not authenticated
