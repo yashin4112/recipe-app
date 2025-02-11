@@ -21,6 +21,13 @@ export default function Page() {
 
   // Effect to check session status and fetch home page data if authenticated
   useEffect(() => {
+    if (status === "loading") return;  // Wait until the session is loaded
+
+    if (!session) {
+      // Redirect to login page if not authenticated
+      router.push("/login");
+    } else 
+    {
       // Fetch home page data once session is available
       const fetchData = async () => {
         try {
@@ -36,6 +43,8 @@ export default function Page() {
         } finally {
           setLoading(false);  // Stop loading once data is fetched or error occurs
         }
+      };
+
       fetchData();
     }
   }, [session, status, router]);  // Run the effect when session or status changes
