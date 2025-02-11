@@ -34,6 +34,7 @@
 import { signOut } from "next-auth/react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import LoadingSpinner from "@/components/loadingspiner";
 
 const LogoutPage = () => {
   const router = useRouter();
@@ -52,7 +53,7 @@ const LogoutPage = () => {
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="text-xl">Logging out...</div> {/* Optional loading text */}
+      <div className="text-xl"><LoadingSpinner/></div> {/* Optional loading text */}
     </div>
   );
 };
