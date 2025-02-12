@@ -107,8 +107,8 @@ const authOptions: NextAuthOptions = {
         if (!passwordMatch) {
           throw new Error("Incorrect password");
         }
-
-        return { id: user.id, name: user.name, email: user.email };
+        console.log("user ", user)
+        return { id: user.id, name: user.name, email: user.email, userType: user.userType };
       },
     }),
   ],
@@ -120,12 +120,14 @@ const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        token.userType = user.userType
       }
       return token;
     },
     async session({ session, token }) {
       if (token) {
         session.user.id = token.id;
+        session.user.userType = token.userType
       }
       return session;
     },

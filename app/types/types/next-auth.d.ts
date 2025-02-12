@@ -2,6 +2,10 @@ import { DefaultSession } from "next-auth";
 
 // Extending the default NextAuth session object
 declare module "next-auth" {
+  interface User {
+    userType: "VIEWER" | "EDITOR"; // Add userType to the User object
+  }
+
   interface Session {
     user: {
       id: string;
