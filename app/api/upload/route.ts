@@ -2,8 +2,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import FormData from "form-data";
 import axios from "axios";
+import { initializeManagementStack } from "@/contentstack-sdk/management";
+import fs from 'fs';
+
 
 export async function POST(req: NextRequest) {
+    
+    const stack = initializeManagementStack();
+
     try {
         const formData = await req.formData();
         const file = formData.get("file") as Blob; // Extract file
@@ -14,7 +20,7 @@ export async function POST(req: NextRequest) {
 
         const buffer = Buffer.from(await file.arrayBuffer()); // Convert file to Buffer
 
-
+        console.log(buffer)
         // Prepare FormData for Contentstack
         const contentstackFormData = new FormData();
 
