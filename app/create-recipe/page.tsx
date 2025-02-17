@@ -19,7 +19,6 @@ function CreateRecipe() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-    // Here you would typically handle form submission, such as posting data to an API.
     const recipe: UploadRecipeProps = {
       title: (document.getElementById("recipe-title") as HTMLInputElement)?.value,
       ingredients: ingredients.join(","),
@@ -129,7 +128,7 @@ function CreateRecipe() {
                 </label>
                 <input
                   type="text"
-                  required
+                   
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                   placeholder="Enter recipe title"
                   id='recipe-title'
@@ -141,7 +140,7 @@ function CreateRecipe() {
                   Description
                 </label>
                 <textarea
-                  required
+                   
                   rows={3}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                   placeholder="Describe your recipe"
@@ -155,7 +154,7 @@ function CreateRecipe() {
                     Category
                   </label>
                   <select
-                    required
+                     
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                     id='category'
                   >
@@ -172,7 +171,7 @@ function CreateRecipe() {
                   </label>
                   <input
                     type="number"
-                    required
+                     
                     min="1"
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                     id='cook-time'
@@ -185,7 +184,7 @@ function CreateRecipe() {
                   </label>
                   <input
                     type="number"
-                    required
+                     
                     min="1"
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                     id='servings'
@@ -220,7 +219,7 @@ function CreateRecipe() {
                         className="hidden"
                         accept="image/*"
                         onChange={handleImageChange}
-                        required
+                         
                       />
                       <p className="pl-1">
                         {imagePreview ? 'Click to change image' : 'Click to upload recipe image'}
@@ -236,7 +235,7 @@ function CreateRecipe() {
                   Difficulty
                 </label>
                 <select
-                  required
+                   
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                   id='difficulty'
                 >

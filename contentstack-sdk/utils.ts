@@ -14,6 +14,7 @@ const {
   CONTENTSTACK_PREVIEW_HOST,
   CONTENTSTACK_APP_HOST,
   CONTENTSTACK_LIVE_PREVIEW,
+  CONTENTSTACK_MANAGEMENT_TOKEN
 } = envConfig;
 
 // basic env validation
@@ -21,7 +22,8 @@ export const isBasicConfigValid = () => {
   return (
     !!CONTENTSTACK_API_KEY &&
     !!CONTENTSTACK_DELIVERY_TOKEN &&
-    !!CONTENTSTACK_ENVIRONMENT
+    !!CONTENTSTACK_ENVIRONMENT &&
+    !!CONTENTSTACK_MANAGEMENT_TOKEN
   );
 };
 // Live preview config validation
@@ -72,7 +74,7 @@ export const initializeContentStackSdk = (): Stack => {
 };
 // api host url
 export const customHostUrl = (baseUrl: string): string => {
-  return baseUrl.replace("api", "api");
+  return baseUrl.replace("api", "cdn");
 };
 // generate prod api urls
 export const generateUrlBasedOnRegion = (): string[] => {
