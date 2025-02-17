@@ -6,7 +6,6 @@ import Link from 'next/link';
 import "../globals.css"
 import { ChefHat, ArrowLeft, Plus, X, Upload } from 'lucide-react';
 import { RecipeProps, UploadRecipeProps } from '@/typescript/layout';
-import { createEntryWithAsset, uploadAssetToContentstack } from '@/contentstack-sdk';
 // import { console } from 'inspector';
 
 function CreateRecipe() {

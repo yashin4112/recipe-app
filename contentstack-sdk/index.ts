@@ -2,7 +2,7 @@ import * as Utils from "@contentstack/utils";
 import ContentstackLivePreview from "@contentstack/live-preview-utils";
 import getConfig from "next/config";
 import contentstack from '@contentstack/management'
-const fs = require("fs");
+// const fs = require("fs");
 const axios = require("axios");
 import FormData from "form-data";
 
@@ -98,74 +98,6 @@ export const getEntry = ({
       );
   });
 };
-
-const authtoken = envConfig.CONTENTSTACK_MANAGEMENT_TOKEN;
-const apiKey = envConfig.CONTENTSTACK_API_KEY;
-
-export async function uploadAssetToContentstack() {
-  try {
-    const url = `https://api.contentstack.io/v3/assets`;
-    const file = fs.createReadStream("/Users/yash.shinde/Downloads/spidy.png");
-    const formData = new FormData();
-    formData.append("asset[upload]", file);
-    formData.append("asset[description]", "description");
-    formData.append("asset[title]", "ironman2");
-
-    const headers = {
-      api_key: apiKey,
-      authorization: authtoken,
-      "Content-Type": "multipart/form-data",
-      ...formData.getHeaders()
-    };
-
-    const response = await axios.post(url, formData, { headers });
-
-    // console.log("Asset uploaded successfully:", response.data);
-    return response.data
-
-    // const contentstackClient = contentstack.client({ authtoken: authtoken });
-    // // Prepare the asset object
-    // const asset = {
-    //   upload: "/Users/yash.shinde/Downloads/Royal Defender Large.jpeg",
-    //   title: "ironamn",      
-    // };
-
-    // console.log("sasdd",contentstackClient)
-
-    // // Upload the asset to Contentstack
-    // const response = await contentstackClient
-    //   .stack({ api_key: apiKey })
-    //   .asset()
-    //   .create(asset);
-
-    // Log the response from Contentstack
-    // console.log('Asset created successfully:', response);
-  } catch (error) {
-    // Handle any errors that occur during the asset upload
-    console.error('Error uploading asset:', error);
-  }
-}
-
-export async function createEntryWithAsset(entryData: UploadRecipeProps) {
-  try {
-    // const uploadedAsset = await uploadAssetToContentstack(filePath, title);
-
-    //@ts-ignore
-    // entryData.recipe_image.uid = uploadedAsset.uid;  // Adjust based on how you reference the asset
-
-    // Now, create the entry with the image attached
-    const contentstackClient = contentstack.client({ authtoken: authtoken });
-    const response = await contentstackClient
-      .stack({ api_key: apiKey })
-      .contentType('recipe')  
-      .entry()
-      .create({ entry: entryData });
-
-    // return response;
-  } catch (error) {
-    console.error('Error creating entry with asset:', error);
-  }
-}
 
 /**
  *fetches specific entry from a content-type
